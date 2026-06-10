@@ -5,7 +5,7 @@ import { CartDrawer } from '@/components/cart-drawer'
 import { CartView } from '@/components/cart-view'
 
 export const metadata: Metadata = {
-  title: 'Carrito | Blush Bar',
+  title: 'Carrito | Velvet',
   description: 'Revisa los productos de tu carrito y finaliza tu compra.',
 }
 

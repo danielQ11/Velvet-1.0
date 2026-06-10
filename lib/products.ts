@@ -16,7 +16,7 @@ export const products: Product[] = [
   {
     id: 'lip-tint-rosa',
     name: 'Lip Tint Velvet',
-    brand: 'Blush Bar',
+    brand: 'Velvet',
     price: 68000,
     category: 'maquillaje',
     categoryLabel: 'Labios',
@@ -29,7 +29,7 @@ export const products: Product[] = [
   {
     id: 'blush-rubor',
     name: 'Rubor en Polvo Glow',
-    brand: 'Blush Bar',
+    brand: 'Velvet',
     price: 82000,
     category: 'maquillaje',
     categoryLabel: 'Rostro',
@@ -42,7 +42,7 @@ export const products: Product[] = [
   {
     id: 'serum-vitamina-c',
     name: 'Serum Vitamina C',
-    brand: 'Blush Bar Skin',
+    brand: 'Velvet Skin',
     price: 124000,
     category: 'skincare',
     categoryLabel: 'Tratamiento',
@@ -54,7 +54,7 @@ export const products: Product[] = [
   {
     id: 'foundation-mate',
     name: 'Base Liquida Second Skin',
-    brand: 'Blush Bar',
+    brand: 'Velvet',
     price: 138000,
     category: 'maquillaje',
     categoryLabel: 'Rostro',
@@ -66,7 +66,7 @@ export const products: Product[] = [
   {
     id: 'mascara-volumen',
     name: 'Mascara Volumen Extremo',
-    brand: 'Blush Bar',
+    brand: 'Velvet',
     price: 74000,
     category: 'maquillaje',
     categoryLabel: 'Ojos',
@@ -79,7 +79,7 @@ export const products: Product[] = [
   {
     id: 'paleta-sombras',
     name: 'Paleta de Sombras Bare',
-    brand: 'Blush Bar',
+    brand: 'Velvet',
     price: 156000,
     category: 'maquillaje',
     categoryLabel: 'Ojos',
@@ -91,7 +91,7 @@ export const products: Product[] = [
   {
     id: 'crema-hidratante',
     name: 'Crema Hidratante Dewy',
-    brand: 'Blush Bar Skin',
+    brand: 'Velvet Skin',
     price: 98000,
     category: 'skincare',
     categoryLabel: 'Hidratacion',
@@ -102,7 +102,7 @@ export const products: Product[] = [
   {
     id: 'lip-gloss',
     name: 'Lip Gloss Shimmer',
-    brand: 'Blush Bar',
+    brand: 'Velvet',
     price: 58000,
     category: 'maquillaje',
     categoryLabel: 'Labios',

@@ -17,9 +17,9 @@ const jost = Jost({
 })
 
 export const metadata: Metadata = {
-  title: 'Blush Bar | Maquillaje y Cuidado de Piel',
+  title: 'Velvet | Maquillaje y Cuidado de Piel',
   description:
-    'Blush Bar Colombia — Descubre maquillaje y skincare de alta gama. Envío gratis por compras superiores a $150.000 COP.',
+    'Velvet Colombia — Descubre maquillaje y skincare de alta gama. Envío gratis por compras superiores a $150.000 COP.',
   generator: 'v0.app',
 }
 

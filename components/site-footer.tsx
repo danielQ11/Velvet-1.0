@@ -25,10 +25,10 @@ export function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <span className="font-heading text-2xl">
-              Blush<span className="text-primary"> Bar</span>
+              Vel<span className="text-primary">vet</span>
             </span>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Registra tu email para unirte a la comunidad Blush Bar y enterarte
+              Registra tu email para unirte a la comunidad Velvet y enterarte
               de promociones, lanzamientos y mucho mas.
             </p>
             <form className="mt-5 flex max-w-sm gap-2">
@@ -65,7 +65,7 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 md:flex-row">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Blush Bar. Todos los derechos
+            © {new Date().getFullYear()} Velvet. Todos los derechos
             reservados.
           </p>
           <div className="flex items-center gap-4">

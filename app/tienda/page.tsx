@@ -6,8 +6,8 @@ import { CartDrawer } from '@/components/cart-drawer'
 import { ShopGrid } from '@/components/shop-grid'
 
 export const metadata: Metadata = {
-  title: 'Tienda | Blush Bar',
-  description: 'Explora todo el catálogo de maquillaje y skincare de Blush Bar.',
+  title: 'Tienda | Velvet',
+  description: 'Explora todo el catálogo de maquillaje y skincare de Velvet.',
 }
 
 export default function ShopPage() {

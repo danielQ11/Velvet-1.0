@@ -51,7 +51,7 @@ export default function HomePage() {
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl md:aspect-square lg:aspect-[4/5]">
             <Image
               src="/hero.png"
-              alt="Modelo con maquillaje Blush Bar"
+              alt="Modelo con maquillaje Velvet"
               fill
               priority
               sizes="(max-width: 768px) 100vw, 50vw"

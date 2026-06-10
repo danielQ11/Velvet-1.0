@@ -36,7 +36,7 @@ export function SiteHeader() {
 
           <Link href="/" className="flex items-center md:flex-1">
             <span className="font-heading text-2xl tracking-tight md:text-3xl">
-              Blush<span className="text-primary"> Bar</span>
+              Vel<span className="text-primary">vet</span>
             </span>
           </Link>
 

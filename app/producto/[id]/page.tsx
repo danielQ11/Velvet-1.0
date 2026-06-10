@@ -22,7 +22,7 @@ export async function generateMetadata({
   const { id } = await params
   const product = getProduct(id)
   return {
-    title: product ? `${product.name} | Blush Bar` : 'Producto | Blush Bar',
+    title: product ? `${product.name} | Velvet` : 'Producto | Velvet',
     description: product?.description,
   }
 }
