@@ -5,17 +5,19 @@ import { Input } from '@/components/ui/input'
 
 const columns = [
   {
-    title: 'Comunidad BB',
-    links: ['Quienes somos', 'Clases de automaquillaje', 'Blog de belleza', 'Trabaja con nosotros'],
-  },
-  {
-    title: 'Nuestras Tiendas',
-    links: ['Bogota', 'Medellin', 'Cali', 'Barranquilla'],
+    title: 'Comunidad Velvet',
+    links: ['Quienes somos', 'Blog de belleza', 'Trabaja con nosotros'],
   },
   {
     title: 'Links de Interes',
     links: ['Politicas de envio', 'Cambios y devoluciones', 'Terminos y condiciones', 'Tratamiento de datos'],
   },
+]
+
+const socials = [
+  { label: 'Instagram', icon: Camera },
+  { label: 'Facebook', icon: MessageCircle },
+  { label: 'Correo', icon: AtSign },
 ]
 
 export function SiteFooter() {
@@ -61,6 +63,24 @@ export function SiteFooter() {
               </ul>
             </div>
           ))}
+
+          <div>
+            <h3 className="mb-4 text-sm font-medium uppercase tracking-wider">
+              Siguenos
+            </h3>
+            <div className="flex items-center gap-3">
+              {socials.map((social) => (
+                <Link
+                  key={social.label}
+                  href="#"
+                  aria-label={social.label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                >
+                  <social.icon className="h-5 w-5" />
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 md:flex-row">

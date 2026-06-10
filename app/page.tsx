@@ -135,22 +135,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Editorial banner */}
-      <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-16 text-center md:px-8">
-          <h2 className="max-w-2xl text-balance font-heading text-3xl md:text-4xl">
-            Aprende a maquillarte como una profesional
-          </h2>
-          <p className="max-w-xl text-pretty leading-relaxed text-primary-foreground/85">
-            Únete a nuestras clases de automaquillaje y descubre los secretos de
-            nuestras artistas. Cupos limitados cada mes.
-          </p>
-          <Button size="lg" variant="secondary" asChild>
-            <Link href="/tienda">Reservar mi cupo</Link>
-          </Button>
-        </div>
-      </section>
-
       <SiteFooter />
     </main>
   )
