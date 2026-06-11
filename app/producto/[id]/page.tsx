@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { ChevronRight, Truck, RotateCcw, ShieldCheck } from 'lucide-react'
+import { ChevronRight, Truck, RotateCcw, ShieldCheck, Star } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { CartDrawer } from '@/components/cart-drawer'
@@ -28,8 +28,8 @@ export async function generateMetadata({
 }
 
 const guarantees = [
-  { icon: Truck, text: 'Envio gratis +$150.000' },
-  { icon: RotateCcw, text: 'Cambios en 30 dias' },
+  { icon: Truck, text: 'Envío gratis +$150.000' },
+  { icon: RotateCcw, text: 'Cambios en 30 días' },
   { icon: ShieldCheck, text: 'Producto 100% original' },
 ]
 
@@ -51,43 +51,63 @@ export default async function ProductPage({
       <SiteHeader />
       <CartDrawer />
 
-      <div className="mx-auto max-w-7xl px-4 py-6 md:px-8">
-        <nav className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Link href="/" className="hover:text-primary">
+      {/* Breadcrumbs */}
+      <div className="mx-auto max-w-7xl px-4 pb-6 pt-28 md:px-8 md:pt-32">
+        <nav className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <Link href="/" className="transition-colors hover:text-primary">
             Inicio
           </Link>
           <ChevronRight className="h-3 w-3" />
-          <Link href="/tienda" className="hover:text-primary">
+          <Link href="/tienda" className="transition-colors hover:text-primary">
             Tienda
           </Link>
           <ChevronRight className="h-3 w-3" />
-          <span className="text-foreground">{product.name}</span>
+          <span className="font-medium text-foreground">{product.name}</span>
         </nav>
       </div>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 pb-16 md:grid-cols-2 md:px-8">
-        <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
-          <Image
-            src={product.image || '/placeholder.svg'}
-            alt={product.name}
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
-          />
+      {/* Product detail */}
+      <section className="mx-auto grid max-w-7xl gap-12 px-4 pb-20 md:grid-cols-2 md:px-8">
+        {/* Image */}
+        <div className="relative">
+          <div className="artistic-frame relative aspect-square overflow-hidden rounded-3xl bg-muted">
+            <Image
+              src={product.image || '/placeholder.svg'}
+              alt={product.name}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+            />
+            {/* Badge */}
+            {(product.bestSeller || product.isNew) && (
+              <span className={`absolute left-5 top-5 ${product.isNew ? 'badge-new' : 'badge-gold'}`}>
+                {product.isNew ? 'Nuevo' : 'Best Seller'}
+              </span>
+            )}
+          </div>
         </div>
 
-        <div className="flex flex-col gap-6 md:py-4">
+        {/* Info */}
+        <div className="flex flex-col gap-6 md:py-6">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-primary">
-              {product.brand}
-            </p>
-            <h1 className="mt-2 font-heading text-4xl md:text-5xl">
+            <div className="divider-star mb-4 max-w-xs text-[10px]">
+              <span>{product.brand.toUpperCase()}</span>
+            </div>
+            <h1 className="font-heading text-4xl leading-tight md:text-5xl">
               {product.name}
             </h1>
-            <p className="mt-3 font-heading text-2xl">
-              {formatCOP(product.price)}
-            </p>
+            <div className="mt-4 flex items-center gap-4">
+              <p className="font-heading text-2xl text-primary">
+                {formatCOP(product.price)}
+              </p>
+              <div className="flex gap-0.5 text-gold">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                ))}
+              </div>
+              <span className="text-xs text-muted-foreground">(24 reseñas)</span>
+            </div>
           </div>
 
           {product.shade && (
@@ -98,30 +118,39 @@ export default async function ProductPage({
             </div>
           )}
 
-          <p className="leading-relaxed text-muted-foreground">
+          <p className="text-base leading-relaxed text-muted-foreground">
             {product.description}
           </p>
 
           <AddToCart product={product} />
 
-          <ul className="mt-2 flex flex-col gap-3 border-t border-border pt-6">
+          {/* Guarantees */}
+          <ul className="mt-2 flex flex-col gap-3.5 border-t border-border/40 pt-6">
             {guarantees.map((g) => (
               <li key={g.text} className="flex items-center gap-3 text-sm">
-                <g.icon className="h-5 w-5 text-primary" />
-                {g.text}
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/50">
+                  <g.icon className="h-4 w-4 text-primary" />
+                </div>
+                <span className="text-muted-foreground">{g.text}</span>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
+      {/* Related products */}
       {related.length > 0 && (
-        <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8">
-          <h2 className="mb-8 font-heading text-3xl">Tambien te puede gustar</h2>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4">
-            {related.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
+        <section className="bg-secondary/20 py-16">
+          <div className="mx-auto max-w-7xl px-4 md:px-8">
+            <div className="mb-10 text-center">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold">✦</p>
+              <h2 className="font-heading text-3xl md:text-4xl">También te puede gustar</h2>
+            </div>
+            <div className="stagger-children grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-4">
+              {related.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
           </div>
         </section>
       )}

@@ -15,24 +15,32 @@ export default function ShopPage() {
     <main>
       <SiteHeader />
       <CartDrawer />
-      <section className="border-b border-border bg-accent/40">
-        <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
-          <p className="text-xs uppercase tracking-[0.2em] text-primary">
-            Tienda
-          </p>
-          <h1 className="mt-2 font-heading text-4xl md:text-5xl">
+
+      {/* Shop header */}
+      <section className="hero-gradient sparkle-field relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <span className="absolute left-[15%] top-[30%] text-gold opacity-40" style={{ fontSize: 14, animation: 'sparkle-pulse 3s ease-in-out infinite' }}>✦</span>
+          <span className="absolute right-[20%] top-[40%] text-gold opacity-30" style={{ fontSize: 10, animation: 'sparkle-pulse 3s ease-in-out 1.2s infinite' }}>✦</span>
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 pb-14 pt-28 md:px-8 md:pb-18 md:pt-32">
+          <div className="divider-star mb-4 max-w-xs text-[10px]">
+            <span>TIENDA</span>
+          </div>
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl">
             Todos los productos
           </h1>
-          <p className="mt-3 max-w-md text-muted-foreground">
-            Maquillaje y cuidado de la piel seleccionados para ti.
+          <p className="mt-4 max-w-lg text-lg text-muted-foreground">
+            Maquillaje y cuidado de la piel seleccionados para ti, con amor y dedicación.
           </p>
         </div>
       </section>
-      <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
+
+      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
         <Suspense fallback={null}>
           <ShopGrid />
         </Suspense>
       </div>
+
       <SiteFooter />
     </main>
   )

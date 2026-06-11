@@ -1,6 +1,6 @@
 'use client'
 
-import { X, Minus, Plus, ShoppingBag } from 'lucide-react'
+import { X, Minus, Plus, ShoppingBag, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/components/cart-context'
@@ -18,64 +18,92 @@ export function CartDrawer() {
 
   return (
     <>
+      {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-50 bg-foreground/40 transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 bg-foreground/50 backdrop-blur-sm transition-opacity duration-400 ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={() => setOpen(false)}
         aria-hidden
       />
+
+      {/* Drawer */}
       <aside
-        className={`fixed right-0 top-0 z-50 flex h-dvh w-full max-w-md flex-col bg-background shadow-2xl transition-transform duration-300 ${
+        className={`fixed right-0 top-0 z-50 flex h-dvh w-full max-w-md flex-col bg-background shadow-2xl transition-transform duration-400 ease-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Carrito de compras"
       >
-        <div className="flex items-center justify-between border-b border-border px-5 py-4">
-          <h2 className="font-heading text-xl">Tu carrito</h2>
-          <button onClick={() => setOpen(false)} aria-label="Cerrar carrito">
-            <X className="h-5 w-5" />
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-border/40 px-6 py-5">
+          <div className="flex items-center gap-2">
+            <ShoppingBag className="h-5 w-5 text-primary" />
+            <h2 className="font-heading text-xl">Tu carrito</h2>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="grid h-9 w-9 place-items-center rounded-full transition-colors hover:bg-accent/50"
+            aria-label="Cerrar carrito"
+          >
+            <X className="h-4 w-4" />
           </button>
         </div>
 
         {items.length === 0 ? (
-          <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
-            <ShoppingBag className="h-10 w-10 text-muted-foreground" />
-            <p className="text-muted-foreground">Tu carrito esta vacio</p>
-            <Button onClick={() => setOpen(false)} asChild>
+          <div className="flex flex-1 flex-col items-center justify-center gap-5 px-6 text-center">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-accent/40">
+              <ShoppingBag className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <div>
+              <p className="font-heading text-lg">Tu carrito está vacío</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Descubre productos increíbles en nuestra tienda
+              </p>
+            </div>
+            <Button onClick={() => setOpen(false)} className="btn-premium rounded-full px-6 text-white" asChild>
               <Link href="/tienda">Explorar productos</Link>
             </Button>
           </div>
         ) : (
           <>
-            <div className="border-b border-border px-5 py-4">
-              <p className="text-xs text-muted-foreground">
-                {remaining > 0 ? (
-                  <>
-                    Te faltan{' '}
-                    <span className="font-medium text-foreground">
-                      {formatCOP(remaining)}
-                    </span>{' '}
-                    para envio gratis
-                  </>
-                ) : (
-                  <span className="font-medium text-primary">
-                    Tienes envio gratis
-                  </span>
-                )}
-              </p>
-              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            {/* Shipping progress */}
+            <div className="border-b border-border/40 px-6 py-4">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-gold" />
+                <p className="text-xs text-muted-foreground">
+                  {remaining > 0 ? (
+                    <>
+                      Te faltan{' '}
+                      <span className="font-semibold text-foreground">
+                        {formatCOP(remaining)}
+                      </span>{' '}
+                      para envío gratis
+                    </>
+                  ) : (
+                    <span className="font-semibold text-primary">
+                      ¡Tienes envío gratis! ✦
+                    </span>
+                  )}
+                </p>
+              </div>
+              <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full rounded-full bg-primary transition-all"
-                  style={{ width: `${progress}%` }}
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${progress}%`,
+                    background: progress >= 100
+                      ? 'linear-gradient(90deg, var(--primary), var(--gold))'
+                      : 'var(--primary)',
+                  }}
                 />
               </div>
             </div>
 
-            <ul className="flex-1 divide-y divide-border overflow-y-auto px-5">
+            {/* Items */}
+            <ul className="flex-1 divide-y divide-border/30 overflow-y-auto px-6">
               {items.map(({ product, quantity }) => (
-                <li key={product.id} className="flex gap-4 py-4">
-                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-muted">
+                <li key={product.id} className="flex gap-4 py-5">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted">
                     <Image
                       src={product.image || '/placeholder.svg'}
                       alt={product.name}
@@ -91,7 +119,7 @@ export function CartDrawer() {
                           {product.name}
                         </p>
                         {product.shade && (
-                          <p className="text-xs text-muted-foreground">
+                          <p className="mt-0.5 text-[11px] text-muted-foreground">
                             {product.shade}
                           </p>
                         )}
@@ -99,15 +127,15 @@ export function CartDrawer() {
                       <button
                         onClick={() => removeItem(product.id)}
                         aria-label="Eliminar"
-                        className="text-muted-foreground hover:text-foreground"
+                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                       >
-                        <X className="h-4 w-4" />
+                        <X className="h-3.5 w-3.5" />
                       </button>
                     </div>
                     <div className="mt-auto flex items-center justify-between">
-                      <div className="flex items-center rounded-full border border-border">
+                      <div className="flex items-center rounded-full border border-border/60 bg-background">
                         <button
-                          className="grid h-7 w-7 place-items-center"
+                          className="grid h-7 w-7 place-items-center rounded-full transition-colors hover:bg-accent"
                           onClick={() =>
                             updateQuantity(product.id, quantity - 1)
                           }
@@ -115,11 +143,11 @@ export function CartDrawer() {
                         >
                           <Minus className="h-3 w-3" />
                         </button>
-                        <span className="w-6 text-center text-sm">
+                        <span className="w-6 text-center text-xs font-medium">
                           {quantity}
                         </span>
                         <button
-                          className="grid h-7 w-7 place-items-center"
+                          className="grid h-7 w-7 place-items-center rounded-full transition-colors hover:bg-accent"
                           onClick={() =>
                             updateQuantity(product.id, quantity + 1)
                           }
@@ -128,7 +156,7 @@ export function CartDrawer() {
                           <Plus className="h-3 w-3" />
                         </button>
                       </div>
-                      <span className="text-sm font-medium">
+                      <span className="font-heading text-sm">
                         {formatCOP(product.price * quantity)}
                       </span>
                     </div>
@@ -137,21 +165,24 @@ export function CartDrawer() {
               ))}
             </ul>
 
-            <div className="border-t border-border px-5 py-4">
-              <div className="mb-3 flex items-center justify-between">
+            {/* Footer */}
+            <div className="border-t border-border/40 px-6 py-5">
+              <div className="mb-4 flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">Subtotal</span>
                 <span className="font-heading text-lg">
                   {formatCOP(subtotal)}
                 </span>
               </div>
-              <Button className="w-full" size="lg" asChild>
-                <Link href="/carrito" onClick={() => setOpen(false)}>
-                  Ver carrito y pagar
-                </Link>
-              </Button>
+              <Link
+                href="/carrito"
+                onClick={() => setOpen(false)}
+                className="btn-premium flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold uppercase tracking-wider text-white"
+              >
+                Ver carrito y pagar
+              </Link>
               <button
                 onClick={() => setOpen(false)}
-                className="mt-2 w-full text-center text-xs text-muted-foreground hover:text-foreground"
+                className="mt-3 w-full text-center text-xs text-muted-foreground transition-colors hover:text-foreground"
               >
                 Seguir comprando
               </button>

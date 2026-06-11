@@ -1,16 +1,14 @@
 import Link from 'next/link'
 import { Camera, AtSign, MessageCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 
 const columns = [
   {
     title: 'Comunidad Velvet',
-    links: ['Quienes somos', 'Blog de belleza', 'Trabaja con nosotros'],
+    links: ['Quiénes somos', 'Blog de belleza', 'Trabaja con nosotros'],
   },
   {
-    title: 'Links de Interes',
-    links: ['Politicas de envio', 'Cambios y devoluciones', 'Terminos y condiciones', 'Tratamiento de datos'],
+    title: 'Links de Interés',
+    links: ['Políticas de envío', 'Cambios y devoluciones', 'Términos y condiciones', 'Tratamiento de datos'],
   },
 ]
 
@@ -22,39 +20,60 @@ const socials = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-20 border-t border-border bg-secondary/50">
-      <div className="mx-auto max-w-7xl px-4 py-14 md:px-8">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+    <footer className="footer-gradient relative mt-0 overflow-hidden">
+      {/* Decorative top sparkle */}
+      <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 text-gold opacity-30" aria-hidden="true">
+        <span style={{ fontSize: 18 }}>✦</span>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 md:px-8">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
+          {/* Brand column */}
           <div className="lg:col-span-2">
-            <span className="font-heading text-2xl">
-              Vel<span className="text-primary">vet</span>
-            </span>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Registra tu email para unirte a la comunidad Velvet y enterarte
-              de promociones, lanzamientos y mucho mas.
+            <Link href="/" className="inline-block">
+              <span className="font-heading text-3xl tracking-tight">
+                <span className="text-gold-accent">V</span>el
+                <span className="text-primary">vet</span>
+              </span>
+            </Link>
+            <p className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              Beauty Studio
             </p>
-            <form className="mt-5 flex max-w-sm gap-2">
-              <Input
+
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              Porque te lo mereces, todos los días. Únete a la comunidad Velvet
+              y descubre promociones, lanzamientos y más.
+            </p>
+
+            {/* Newsletter */}
+            <form className="mt-6 flex max-w-sm gap-2">
+              <input
                 type="email"
-                placeholder="Tu correo electronico"
-                aria-label="Correo electronico"
-                className="bg-background"
+                placeholder="Tu correo electrónico"
+                aria-label="Correo electrónico"
+                className="flex-1 rounded-full border border-border bg-background/60 px-4 py-2.5 text-sm backdrop-blur placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
-              <Button type="submit">Suscribir</Button>
+              <button
+                type="submit"
+                className="btn-premium shrink-0 rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white"
+              >
+                Suscribir
+              </button>
             </form>
           </div>
 
+          {/* Link columns */}
           {columns.map((col) => (
             <div key={col.title}>
-              <h3 className="mb-4 text-sm font-medium uppercase tracking-wider">
+              <h3 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em]">
                 {col.title}
               </h3>
-              <ul className="flex flex-col gap-2.5">
+              <ul className="flex flex-col gap-3">
                 {col.links.map((link) => (
                   <li key={link}>
                     <Link
                       href="#"
-                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                      className="text-sm text-muted-foreground transition-colors duration-300 hover:text-primary"
                     >
                       {link}
                     </Link>
@@ -64,9 +83,10 @@ export function SiteFooter() {
             </div>
           ))}
 
+          {/* Social column */}
           <div>
-            <h3 className="mb-4 text-sm font-medium uppercase tracking-wider">
-              Siguenos
+            <h3 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em]">
+              Síguenos
             </h3>
             <div className="flex items-center gap-3">
               {socials.map((social) => (
@@ -74,30 +94,47 @@ export function SiteFooter() {
                   key={social.label}
                   href="#"
                   aria-label={social.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/40 text-muted-foreground backdrop-blur transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-md"
                 >
-                  <social.icon className="h-5 w-5" />
+                  <social.icon className="h-[18px] w-[18px] transition-transform duration-300 group-hover:scale-110" />
                 </Link>
               ))}
+            </div>
+
+            {/* Trust badges */}
+            <div className="mt-8 space-y-2">
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                ✦ 100% Original
+              </p>
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                ✦ Cruelty Free
+              </p>
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                ✦ Envío seguro
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 md:flex-row">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Velvet. Todos los derechos
-            reservados.
-          </p>
-          <div className="flex items-center gap-4">
-            <Link href="#" aria-label="Instagram" className="text-muted-foreground hover:text-primary">
-              <Camera className="h-5 w-5" />
-            </Link>
-            <Link href="#" aria-label="Facebook" className="text-muted-foreground hover:text-primary">
-              <MessageCircle className="h-5 w-5" />
-            </Link>
-            <Link href="#" aria-label="Correo" className="text-muted-foreground hover:text-primary">
-              <AtSign className="h-5 w-5" />
-            </Link>
+        {/* Bottom bar */}
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-border/40 pt-6 md:flex-row">
+          <div className="flex items-center gap-3">
+            <span className="text-gold text-sm">✦</span>
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Velvet Beauty Studio. Todos los derechos reservados.
+            </p>
+          </div>
+          <div className="flex items-center gap-5">
+            {socials.map((social) => (
+              <Link
+                key={social.label}
+                href="#"
+                aria-label={social.label}
+                className="text-muted-foreground/60 transition-colors hover:text-primary"
+              >
+                <social.icon className="h-4 w-4" />
+              </Link>
+            ))}
           </div>
         </div>
       </div>
