@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   description:
     'Velvet Colombia — Descubre maquillaje y skincare de alta gama. Envío gratis por compras superiores a $150.000 COP.',
   generator: 'v0.app',
+  icons: {
+    icon: '/Logo.jpeg',
+    apple: '/Logo.jpeg',
+  },
 }
 
 export default function RootLayout({

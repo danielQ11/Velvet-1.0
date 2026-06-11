@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Camera, AtSign, MessageCircle } from 'lucide-react'
 
 const columns = [
@@ -31,14 +32,14 @@ export function SiteFooter() {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
-              <span className="font-heading text-3xl tracking-tight">
-                <span className="text-gold-accent">V</span>el
-                <span className="text-primary">vet</span>
-              </span>
+              <Image
+                src="/Logo.jpeg"
+                alt="Velvet Beauty"
+                width={80}
+                height={80}
+                className="rounded-full object-cover"
+              />
             </Link>
-            <p className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Beauty Studio
-            </p>
 
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Porque te lo mereces, todos los días. Únete a la comunidad Velvet

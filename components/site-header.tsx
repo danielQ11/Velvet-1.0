@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search, ShoppingBag, Menu, User, Heart, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/components/cart-context'
@@ -46,13 +47,14 @@ export function SiteHeader() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center md:flex-1">
-            <span className="font-heading text-2xl tracking-tight md:text-3xl">
-              <span className="text-gold-accent">V</span>el
-              <span className="text-primary">vet</span>
-            </span>
-            <span className="ml-2 hidden text-[9px] uppercase tracking-[0.25em] text-muted-foreground lg:inline">
-              Beauty Studio
-            </span>
+            <Image
+              src="/Logo.jpeg"
+              alt="Velvet Beauty"
+              width={52}
+              height={52}
+              className="rounded-full object-cover"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}

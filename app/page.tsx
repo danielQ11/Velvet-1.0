@@ -70,6 +70,14 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-28 md:grid-cols-2 md:px-8 md:pb-20 md:pt-32 lg:pb-28 lg:pt-40">
           {/* Text side */}
           <div className="relative z-20 flex flex-col items-start gap-7 animate-fade-up">
+            <Image
+              src="/Logo.jpeg"
+              alt="Velvet Beauty"
+              width={90}
+              height={90}
+              className="rounded-full object-cover shadow-lg ring-2 ring-primary/20"
+              priority
+            />
             <div className="divider-star w-full max-w-xs">
               <span>VELVET BEAUTY STUDIO</span>
             </div>
