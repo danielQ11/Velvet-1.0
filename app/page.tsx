@@ -96,9 +96,12 @@ export default function HomePage() {
               >
                 Comprar ahora <ArrowRight className="h-4 w-4" />
               </Link>
-              <Button size="lg" variant="outline" className="rounded-full border-primary/30 px-8 text-sm uppercase tracking-wider hover:border-primary hover:bg-primary/5" asChild>
-                <Link href="/tienda?categoria=skincare">Ver skincare</Link>
-              </Button>
+              <Link
+                href="/tienda?categoria=skincare"
+                className="inline-flex h-11 items-center justify-center rounded-full border border-primary/30 px-8 text-sm font-medium uppercase tracking-wider transition-colors hover:border-primary hover:bg-primary/5"
+              >
+                Ver skincare
+              </Link>
             </div>
 
             {/* Social proof */}

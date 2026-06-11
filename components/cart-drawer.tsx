@@ -60,9 +60,13 @@ export function CartDrawer() {
                 Descubre productos increíbles en nuestra tienda
               </p>
             </div>
-            <Button onClick={() => setOpen(false)} className="btn-premium rounded-full px-6 text-white" asChild>
-              <Link href="/tienda">Explorar productos</Link>
-            </Button>
+            <Link 
+              href="/tienda" 
+              onClick={() => setOpen(false)} 
+              className="btn-premium inline-flex h-10 items-center justify-center rounded-full px-6 text-sm font-medium text-white transition-colors"
+            >
+              Explorar productos
+            </Link>
           </div>
         ) : (
           <>
