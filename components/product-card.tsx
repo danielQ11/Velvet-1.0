@@ -6,9 +6,13 @@ import { ShoppingBag, Heart } from 'lucide-react'
 import type { Product } from '@/lib/products'
 import { formatCOP } from '@/lib/products'
 import { useCart } from '@/components/cart-context'
+import { useFavorites } from '@/components/favorites-context'
+import { cn } from '@/lib/utils'
 
 export function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart()
+  const { toggle, isFav } = useFavorites()
+  const fav = isFav(product.id)
 
   return (
     <div className="group flex flex-col animate-fade-up">
@@ -37,11 +41,17 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Action buttons */}
         <div className="absolute right-3 top-3 flex flex-col gap-2">
           <button
-            className="grid h-9 w-9 translate-x-2 place-items-center rounded-full bg-background/90 text-foreground/60 opacity-0 shadow-md backdrop-blur transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 hover:bg-primary hover:text-primary-foreground"
-            aria-label={`Agregar ${product.name} a favoritos`}
-            onClick={(e) => { e.preventDefault() }}
+            className={cn(
+              'grid h-9 w-9 place-items-center rounded-full shadow-md backdrop-blur transition-all duration-300',
+              fav
+                ? 'bg-red-500 text-white opacity-100'
+                : 'translate-x-2 bg-background/90 text-foreground/60 opacity-0 hover:bg-red-500 hover:text-white group-hover:translate-x-0 group-hover:opacity-100',
+            )}
+            aria-label={fav ? `Quitar ${product.name} de favoritos` : `Agregar ${product.name} a favoritos`}
+            aria-pressed={fav}
+            onClick={(e) => { e.preventDefault(); toggle(product.id) }}
           >
-            <Heart className="h-4 w-4" />
+            <Heart className={cn('h-4 w-4', fav && 'fill-current')} />
           </button>
         </div>
 

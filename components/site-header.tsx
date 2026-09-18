@@ -4,26 +4,39 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Search, ShoppingBag, Menu, User, Heart, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useCart } from '@/components/cart-context'
+import { useFavorites } from '@/components/favorites-context'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 const navLinks = [
+  { href: '/', label: 'Inicio' },
   { href: '/tienda', label: 'Tienda' },
-  { href: '/tienda?categoria=maquillaje', label: 'Maquillaje' },
-  { href: '/tienda?categoria=skincare', label: 'Skincare' },
-  { href: '/tienda?categoria=herramientas', label: 'Herramientas' },
+  { href: '/favoritos', label: 'Favoritos' },
 ]
 
 export function SiteHeader() {
   const { totalItems, setOpen } = useCart()
+  const { count: favCount } = useFavorites()
+  const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  function submitSearch(e: React.FormEvent) {
+    e.preventDefault()
+    const q = query.trim()
+    router.push(q ? `/tienda?buscar=${encodeURIComponent(q)}` : '/tienda')
+    setSearchOpen(false)
+  }
 
   return (
     <header className="fixed top-0 z-40 w-full transition-colors duration-300">
@@ -72,25 +85,46 @@ export function SiteHeader() {
 
           {/* Actions */}
           <div className="flex items-center gap-0.5 md:flex-1 md:justify-end">
-            <Button variant="ghost" size="icon" aria-label="Buscar" className="rounded-full hover:bg-accent/50">
-              <Search className="h-[18px] w-[18px]" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden rounded-full hover:bg-accent/50 sm:inline-flex"
-              aria-label="Cuenta"
+            {searchOpen ? (
+              <form onSubmit={submitSearch} className="flex items-center gap-1">
+                <Input
+                  autoFocus
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Buscar productos…"
+                  aria-label="Buscar productos"
+                  className="h-9 w-40 rounded-full md:w-52"
+                />
+                <Button variant="ghost" size="icon" aria-label="Cerrar búsqueda" className="rounded-full" onClick={() => setSearchOpen(false)} type="button">
+                  <X className="h-[18px] w-[18px]" />
+                </Button>
+              </form>
+            ) : (
+              <Button variant="ghost" size="icon" aria-label="Buscar" className="rounded-full hover:bg-accent/50" onClick={() => setSearchOpen(true)}>
+                <Search className="h-[18px] w-[18px]" />
+              </Button>
+            )}
+            <Link
+              href="/admin"
+              aria-label="Administración"
+              title="Administración"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-all outline-none select-none hover:bg-muted hover:text-foreground"
             >
               <User className="h-[18px] w-[18px]" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden rounded-full hover:bg-accent/50 sm:inline-flex"
+            </Link>
+            <Link
+              href="/favoritos"
               aria-label="Favoritos"
+              title="Favoritos"
+              className="relative inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-all outline-none select-none hover:bg-muted hover:text-foreground"
             >
               <Heart className="h-[18px] w-[18px]" />
-            </Button>
+              {favCount > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-primary px-1 text-[9px] font-bold text-primary-foreground shadow-sm">
+                  {favCount}
+                </span>
+              )}
+            </Link>
             <Button
               variant="ghost"
               size="icon"

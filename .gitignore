@@ -8,6 +8,12 @@ __v0_jsx-dev-runtime.ts
 
 # Environment variables
 .env*.local
+.env
+# Admin database (SQLite local)
+data/*.db
+data/*.db-journal
+# Uploads locales (se generan en el servidor)
+public/uploads/*
 
 # Common ignores
 node_modules

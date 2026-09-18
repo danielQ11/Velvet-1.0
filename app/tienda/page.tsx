@@ -4,13 +4,15 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { CartDrawer } from '@/components/cart-drawer'
 import { ShopGrid } from '@/components/shop-grid'
+import { listProductsFromDb } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: 'Tienda | Velvet',
   description: 'Explora todo el catálogo de maquillaje y skincare de Velvet.',
 }
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const initialProducts = await listProductsFromDb(false)
   return (
     <main>
       <SiteHeader />
@@ -37,7 +39,7 @@ export default function ShopPage() {
 
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
         <Suspense fallback={null}>
-          <ShopGrid />
+          <ShopGrid initialProducts={initialProducts} />
         </Suspense>
       </div>
 

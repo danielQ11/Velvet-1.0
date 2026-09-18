@@ -8,10 +8,15 @@ import { SiteFooter } from '@/components/site-footer'
 import { CartDrawer } from '@/components/cart-drawer'
 import { ProductCard } from '@/components/product-card'
 import { AddToCart } from '@/components/add-to-cart'
-import { getProduct, products, formatCOP } from '@/lib/products'
+import { products as fallbackProducts, formatCOP } from '@/lib/products'
+import { getProductFromDb, listProductsFromDb } from '@/lib/db'
 
-export function generateStaticParams() {
-  return products.map((p) => ({ id: p.id }))
+export async function generateStaticParams() {
+  try {
+    return (await listProductsFromDb(true)).map((p) => ({ id: p.id }))
+  } catch {
+    return fallbackProducts.map((p) => ({ id: p.id }))
+  }
 }
 
 export async function generateMetadata({
@@ -20,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>
 }): Promise<Metadata> {
   const { id } = await params
-  const product = getProduct(id)
+  const product = await getProductFromDb(id)
   return {
     title: product ? `${product.name} | Velvet` : 'Producto | Velvet',
     description: product?.description,
@@ -39,10 +44,10 @@ export default async function ProductPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const product = getProduct(id)
-  if (!product) notFound()
+  const product = await getProductFromDb(id)
+  if (!product || product.active === false) notFound()
 
-  const related = products
+  const related = (await listProductsFromDb(false))
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4)
 

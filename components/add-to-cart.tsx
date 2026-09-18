@@ -4,10 +4,14 @@ import { useState } from 'react'
 import { Minus, Plus, ShoppingBag, Heart } from 'lucide-react'
 import type { Product } from '@/lib/products'
 import { useCart } from '@/components/cart-context'
+import { useFavorites } from '@/components/favorites-context'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 export function AddToCart({ product }: { product: Product }) {
   const { addItem } = useCart()
+  const { toggle, isFav } = useFavorites()
+  const fav = isFav(product.id)
   const [qty, setQty] = useState(1)
 
   return (
@@ -45,10 +49,18 @@ export function AddToCart({ product }: { product: Product }) {
         <Button
           size="lg"
           variant="outline"
-          className="rounded-full border-border/60 px-4 hover:border-primary hover:bg-primary/5"
-          aria-label="Agregar a favoritos"
+          onClick={() => toggle(product.id)}
+          aria-pressed={fav}
+          aria-label={fav ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+          title={fav ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+          className={cn(
+            'rounded-full border-border/60 px-4',
+            fav
+              ? 'border-red-500 bg-red-500 text-white hover:bg-red-600 hover:text-white'
+              : 'hover:border-red-400 hover:bg-red-500/5 hover:text-red-500',
+          )}
         >
-          <Heart className="h-4 w-4" />
+          <Heart className={cn('h-4 w-4', fav && 'fill-current')} />
         </Button>
       </div>
     </div>

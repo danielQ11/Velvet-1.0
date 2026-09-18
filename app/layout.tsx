@@ -4,6 +4,8 @@ import { Playfair_Display, Jost } from 'next/font/google'
 import { Suspense } from 'react'
 import './globals.css'
 import { CartProvider } from '@/components/cart-context'
+import { FavoritesProvider } from '@/components/favorites-context'
+import { AuthSessionProvider } from '@/components/session-provider'
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
@@ -39,7 +41,11 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         <Suspense fallback={null}>
-          <CartProvider>{children}</CartProvider>
+          <AuthSessionProvider>
+            <CartProvider>
+              <FavoritesProvider>{children}</FavoritesProvider>
+            </CartProvider>
+          </AuthSessionProvider>
         </Suspense>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

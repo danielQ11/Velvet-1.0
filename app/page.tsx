@@ -6,7 +6,8 @@ import { SiteFooter } from '@/components/site-footer'
 import { CartDrawer } from '@/components/cart-drawer'
 import { ProductCard } from '@/components/product-card'
 import { Button } from '@/components/ui/button'
-import { products, categories } from '@/lib/products'
+import { products as fallbackProducts, categories } from '@/lib/products'
+import { listProductsFromDb } from '@/lib/db'
 
 const perks = [
   { icon: Truck, title: 'Envío gratis', text: 'En compras +$150.000' },
@@ -33,8 +34,14 @@ const testimonials = [
   },
 ]
 
-export default function HomePage() {
-  const featured = products.filter((p) => p.bestSeller || p.isNew).slice(0, 4)
+export default async function HomePage() {
+  let all = fallbackProducts
+  try {
+    all = await listProductsFromDb(false)
+  } catch {
+    all = fallbackProducts
+  }
+  const featured = all.filter((p) => p.bestSeller || p.isNew).slice(0, 4)
 
   return (
     <main>

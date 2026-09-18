@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { SlidersHorizontal } from 'lucide-react'
 import { ProductCard } from '@/components/product-card'
-import { products } from '@/lib/products'
+import { products as fallbackProducts, type Product } from '@/lib/products'
 
 const filters = [
   { slug: 'todos', label: 'Todos' },
@@ -19,21 +19,30 @@ const sorters = [
   { value: 'precio-desc', label: 'Precio: mayor a menor' },
 ]
 
-export function ShopGrid() {
+export function ShopGrid({ initialProducts }: { initialProducts?: Product[] }) {
+  const products = initialProducts ?? fallbackProducts
   const searchParams = useSearchParams()
   const initial = searchParams.get('categoria') ?? 'todos'
+  const initialQuery = searchParams.get('buscar') ?? ''
   const [active, setActive] = useState(initial)
   const [sort, setSort] = useState('destacados')
+  const [query, setQuery] = useState(initialQuery)
 
   const visible = useMemo(() => {
     let list =
       active === 'todos'
         ? [...products]
         : products.filter((p) => p.category === active)
+    const q = query.trim().toLowerCase()
+    if (q) {
+      list = list.filter((p) =>
+        [p.name, p.brand, p.categoryLabel, p.description].join(' ').toLowerCase().includes(q),
+      )
+    }
     if (sort === 'precio-asc') list.sort((a, b) => a.price - b.price)
     if (sort === 'precio-desc') list.sort((a, b) => b.price - a.price)
     return list
-  }, [active, sort])
+  }, [active, sort, query, products])
 
   return (
     <div>
@@ -72,10 +81,13 @@ export function ShopGrid() {
       </div>
 
       {/* Results count */}
-      <div className="mb-6 flex items-center gap-2">
+      <div className="mb-6 flex flex-wrap items-center gap-2">
         <span className="text-gold text-xs">✦</span>
         <p className="text-xs text-muted-foreground">
           {visible.length} producto{visible.length !== 1 ? 's' : ''}
+          {query.trim() && (
+            <> para &ldquo;{query.trim()}&rdquo; <button onClick={() => setQuery('')} className="ml-1 underline hover:text-primary">limpiar</button></>
+          )}
         </p>
       </div>
 
@@ -83,7 +95,7 @@ export function ShopGrid() {
         <div className="flex flex-col items-center gap-4 py-24 text-center">
           <span className="text-gold text-2xl">✦</span>
           <p className="text-muted-foreground">
-            No hay productos en esta categoría todavía.
+            {query.trim() ? 'Sin resultados para esa búsqueda.' : 'No hay productos en esta categoría todavía.'}
           </p>
         </div>
       ) : (

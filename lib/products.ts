@@ -10,6 +10,8 @@ export type Product = {
   description: string
   bestSeller?: boolean
   isNew?: boolean
+  stock?: number
+  active?: boolean
 }
 
 export const products: Product[] = [
