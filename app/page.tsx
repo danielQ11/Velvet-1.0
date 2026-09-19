@@ -358,7 +358,7 @@ export default async function HomePage() {
             Sé la primera en conocer nuestros lanzamientos, promociones
             exclusivas y tips de belleza.
           </p>
-          <form className="flex w-full max-w-md gap-3">
+          <form className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
             <input
               type="email"
               placeholder="Tu correo electrónico"

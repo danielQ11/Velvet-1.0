@@ -45,7 +45,7 @@ export function ProductCard({ product }: { product: Product }) {
               'grid h-9 w-9 place-items-center rounded-full shadow-md backdrop-blur transition-all duration-300',
               fav
                 ? 'bg-red-500 text-white opacity-100'
-                : 'translate-x-2 bg-background/90 text-foreground/60 opacity-0 hover:bg-red-500 hover:text-white group-hover:translate-x-0 group-hover:opacity-100',
+                : 'translate-x-2 bg-background/90 text-foreground/60 opacity-0 hover:bg-red-500 hover:text-white group-hover:translate-x-0 group-hover:opacity-100 max-md:translate-x-0 max-md:opacity-100',
             )}
             aria-label={fav ? `Quitar ${product.name} de favoritos` : `Agregar ${product.name} a favoritos`}
             aria-pressed={fav}
@@ -61,7 +61,7 @@ export function ProductCard({ product }: { product: Product }) {
             e.preventDefault()
             addItem(product)
           }}
-          className="absolute bottom-3 left-3 right-3 flex translate-y-3 items-center justify-center gap-2 rounded-xl bg-foreground/90 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-background opacity-0 shadow-lg backdrop-blur transition-all duration-400 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary"
+          className="absolute bottom-3 left-3 right-3 flex translate-y-3 items-center justify-center gap-2 rounded-xl bg-foreground/90 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-background opacity-0 shadow-lg backdrop-blur transition-all duration-400 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary max-md:translate-y-0 max-md:opacity-100"
           aria-label={`Agregar ${product.name} al carrito`}
         >
           <ShoppingBag className="h-3.5 w-3.5" />
